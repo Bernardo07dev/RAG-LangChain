@@ -5,7 +5,7 @@ from langchain_core.tools import BaseTool
 from vectorizing import db_context
 
 load_dotenv()
-base_llm = init_chat_model(model="gemini-2.5-flash", model_provider="google-genai")
+base_llm = init_chat_model(model="gemini-3-flash-preview", model_provider="google-genai")
 
 @tool
 def consultar_politicas(pergunta: str) -> str:
@@ -19,8 +19,9 @@ def consultar_politicas(pergunta: str) -> str:
     if not resultados:
         return "Nenhuma política encontrada sobre este assunto."
 
-    contexto = f"{resultados['titulo']} - {resultados['conteudo']}"
-    return contexto
+    doc = resultados[0]
+
+    return f"{doc['titulo']} - {doc['conteudo']}"
 
 tools: list[BaseTool] = [consultar_politicas]
 llm = base_llm.bind_tools(tools)
