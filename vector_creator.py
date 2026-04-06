@@ -3,7 +3,6 @@ from langchain.chat_models import init_chat_model
 from supabase import create_client
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from dotenv import load_dotenv
-from google import genai
 from rich import print
 
 load_dotenv()
