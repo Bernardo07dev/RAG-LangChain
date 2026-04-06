@@ -33,4 +33,6 @@ def db_context(pergunta: str):
     resposta = supabase.rpc("buscar_politicas", rpc_params).execute()
     return resposta.data
 
-print(db_context("Me de as políticas de privacidade"))
+
+if __name__ == "__main__":
+    print(db_context("Me de as políticas de privacidade"))

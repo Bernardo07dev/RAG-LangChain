@@ -1,9 +1,11 @@
-from langchain_core.messages import BaseMessage, tool
-from langchain_core.tools import BaseTool
+from langchain.chat_models import init_chat_model
 from dotenv import load_dotenv
-from util import S_M
-from rich import print
+from langchain_core.tools import tool
+from langchain_core.tools import BaseTool
 from vectorizing import db_context
+
+load_dotenv()
+base_llm = init_chat_model(model="gemini-2.5-flash", model_provider="google-genai")
 
 @tool
 def consultar_politicas(pergunta: str) -> str:
@@ -19,3 +21,6 @@ def consultar_politicas(pergunta: str) -> str:
 
     contexto = f"{resultados['titulo']} - {resultados['conteudo']}"
     return contexto
+
+tools: list[BaseTool] = [consultar_politicas]
+llm = base_llm.bind_tools(tools)
